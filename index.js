@@ -12,7 +12,7 @@ const menu = new Menu("my-menu-identifier")
 bot.use(menu);
 
 bot.command('start', async (ctx) => {
-    const main = new Keyboard()
+    const keyboard = new Keyboard()
     .text("HTML")
     .text("CSS")
     .row()
@@ -21,13 +21,13 @@ bot.command('start', async (ctx) => {
     .resized();
 
     await ctx.reply("Check out this menu:", { reply_markup: menu });
-
-/*     let user = ctx.from.first_name +' ' +  ctx.from.last_name;
+  
+    let user = ctx.from.first_name +' ' +  ctx.from.last_name;
     await ctx.reply(`Привет ${user}!`,);
 
     await ctx.reply('Выбери тему, о чем будем говорить', {
-        reply_markup: Keyboard,
-    }); */
+        reply_markup: keyboard,
+    });
 })
 
 bot.command("Logeek", async (ctx) => {
@@ -39,6 +39,9 @@ bot.hears(["HTML", "CSS", "JavaScript", "React"], async (ctx) => {
     const inlineKeyboard = new InlineKeyboard()
     .text('Получить ответ', 'getAnswer')
     .text('отмена', 'cancel');
+    await ctx.reply('ppppp', {
+      reply_markup: inlineKeyboard,
+  });
 })
 
 bot.on('callback_query:data', async(ctx) => {
