@@ -5,11 +5,16 @@ const { Menu } = require("@grammyjs/menu");
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
-const menu = new Menu("my-menu-identifier")
-  .text("A", (ctx) => ctx.reply(`You pressed ${ctx.callbackQuery.data.split('/')[0]}! ${ctx.from.username}`))
+const menu = new Menu("my-menu")
+  .text("A", (ctx) => ctx.reply(pressedA(ctx)))
   .text("B", (ctx) => ctx.reply(`You pressed ${ctx.callbackQuery.data}! ${ctx.from.username}`));
 
 bot.use(menu);
+
+function pressedA(ctx){
+  console.log(ctx.callbackQuery.data.split('/')[0]);
+  return `You pressed ${ctx.callbackQuery.data.split('/')[1]}! ${ctx.from.username}`
+};
 
 bot.command('start', async (ctx) => {
     const keyboard = new Keyboard()
@@ -48,15 +53,10 @@ bot.on('callback_query:data', async(ctx) => {
   if(ctx.callbackQuery.data === 'cancel'){
     await ctx.reply('cancel');
     await ctx.answerCallbackQuery();
-  }
-})
-
-bot.on('callback_query:data', async (ctx) => {
-  if(ctx.callbackQuery.data === 'getAnswer'){
+  }else if(ctx.callbackQuery.data === 'getAnswer'){
     console.log('Lოgeek is pushed');
   }
-}
-)
+});
 
 //Error handler
 bot.catch((err) => {
